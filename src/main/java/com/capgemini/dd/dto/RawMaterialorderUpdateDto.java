@@ -1,5 +1,7 @@
 package com.capgemini.dd.dto;
 
+import java.time.LocalDate;
+
 public class RawMaterialorderUpdateDto {
 	
 	private String name;
@@ -8,6 +10,24 @@ public class RawMaterialorderUpdateDto {
 	private double quantityValue;
 	private double quantityUnit;
 	private double pricePerUnit;
+	private LocalDate expectedDeliveryDate;
+	private double totalPrice;
+	
+	
+	
+	
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public LocalDate getExpectedDeliveryDate() {
+		return expectedDeliveryDate;
+	}
+	public void setExpectedDeliveryDate(LocalDate expectedDeliveryDate) {
+		this.expectedDeliveryDate = expectedDeliveryDate;
+	}
 	public String getName() {
 		return name;
 	}

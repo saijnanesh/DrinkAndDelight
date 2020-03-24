@@ -1,8 +1,9 @@
 package com.capgemini.dd.service;
 import com.capgemini.dd.exception.*;
+
+import java.time.LocalDate;
 import java.util.*;
 import com.capgemini.dd.dao.PlaceAnOrderDao;
-import com.capgemini.dd.dao.PlacedOrderDetails;
 import com.capgemini.dd.dto.RawMaterialOrder;
 import com.capgemini.dd.dto.RawMaterialorderUpdateDto;
 import com.capgemini.dd.exception.InvalidException;
@@ -10,7 +11,6 @@ import com.capgemini.dd.exception.InvalidException;
 public class PlaceAnOrderService implements ServiceInterface {
 	
 	PlaceAnOrderDao orderObj = new PlaceAnOrderDao();
-	PlacedOrderDetails orderDao = new PlacedOrderDetails();
 	Map<Integer,RawMaterialOrder> mapOrder;
 	public PlaceAnOrderService()
 	{
@@ -51,26 +51,18 @@ public class PlaceAnOrderService implements ServiceInterface {
 	
 	
 	
-	 String name;
-	 String supplierid;
-	 String orderid;
-	double quantityvalue;
-	double quantityunit;
-	double priceperunit;
-	
-	
 	
 	
 	public boolean nameValidation(String name) throws InvalidException
 	{
 		
-	if(!rawMaterialName.contains(name) || name.matches("[a-z][A-z]\\D*"))
+	if(!rawMaterialName.contains(name) && name.matches("[a-z][A-z]\\D*"))
 			{
 		 throw  new InvalidException("Invalid Name");
 			}
 			else
 			{
-				this.name=name;
+				
 				return true;
 			}	
 		}
@@ -85,7 +77,7 @@ public class PlaceAnOrderService implements ServiceInterface {
 			}
 			else
 			{
-				this.supplierid=supplierid;
+				
 				return true;
 			}
 		}
@@ -102,7 +94,7 @@ public class PlaceAnOrderService implements ServiceInterface {
 			}
 			else
 			{
-				this.quantityvalue=quantityvalue;
+				
 				return true;
 			}
 		}
@@ -119,18 +111,19 @@ public class PlaceAnOrderService implements ServiceInterface {
 			}
 			else
 			{
-				this.quantityunit=quantityunit;
+				
 				return true;
 			}
 		}
 		
 	
 	
-	public boolean orderIdValidation(String name,String orderid) 
+	public boolean orderIdValidation(String name) 
 	{
 			if(rawMaterialName.contains(name))
-				this.orderid=orderid;
-			return true;
+				return true;
+			else
+				return false;
 			
 		}
 		
@@ -144,17 +137,50 @@ public class PlaceAnOrderService implements ServiceInterface {
 			}
 			else
 			{
-				this.priceperunit=priceperunit;
 				return true;
 			}
 		
+	}
+	
+	
+	public LocalDate addDeliveryDate()
+	{
+		LocalDate currentDate=LocalDate.now();
+	
+		return 	currentDate.plusDays(5);
 	}
 		
 		
 		public void serviceValidation(RawMaterialorderUpdateDto bean)
 		{
-			orderDao.addOrderDao(bean);
+			orderObj.addOrderDao(bean);
 			}
+
+
+
+
+
+
+
+
+		@Override
+		public List<RawMaterialorderUpdateDto> getOrderDetailsService() {
+			
+			return orderObj.getOrderDetailsDao();
+			}
+
+
+
+
+
+
+
+
+		@Override
+		public Map<Integer, RawMaterialOrder> getStockdata() {
+			// TODO Auto-generated method stub
+			return mapOrder;
+		}
 		
 		
 		
